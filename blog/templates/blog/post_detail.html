@@ -4,7 +4,7 @@
         <img class="rounded-circle article-img"src="{{ object.author.profile.image.url }}">
         <div class="media-body">
         <div class="article-metadata">
-            <a class="mr-2" href="{% url 'user-posts' obj.author.username %}">{{ object.author }}</a>
+            <a class="mr-2" href="{% url 'user-posts' object.author.username %}">{{ object.author }}</a>
             <small class="text-muted">{{ object.date_posted|date:"F d, Y" }}</small>
             {% if object.author == user %}
             <div>
@@ -17,5 +17,15 @@
         <h2 class="article-title">{{ object.title }}</h2>
         <p class="article-content">{{ object.content }}</p>
         </div>
+        <div>
+            <a class="btn btn-outline-secondary" href="/">Back</a>
+        </div>
+        <br>
+        <hr>
+        <br>
+        <form action="{% url 'like-post' post.pk %}" method="POST">
+            {% csrf_token %}
+            <button type="submit", name="post_id", value="{{ post.id }}}", class="btn btn-primary btn-sm">Like</button> - {{ total_likes }} likes
+        </form>
     </article>
 {% endblock content %}
