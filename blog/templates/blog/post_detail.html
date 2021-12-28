@@ -1,5 +1,6 @@
 {% extends "blog/base.html" %}
 {% block content %}
+
     <article class="media content-section">
         <img class="rounded-circle article-img"src="{{ object.author.profile.image.url }}">
         <div class="media-body">
@@ -20,12 +21,18 @@
         <div>
             <a class="btn btn-outline-secondary" href="/">Back</a>
         </div>
-        <br>
+        
         <hr>
-        <br>
+        
         <form action="{% url 'like-post' post.pk %}" method="POST">
             {% csrf_token %}
-            <button type="submit", name="post_id", value="{{ post.id }}}", class="btn btn-primary btn-sm">Like</button> - {{ total_likes }} likes
+            <button type="submit", name="post_id", value="{{ post.id }}", class="like">
+                <span class="like__icon">
+                    <i class="bi bi-heart-fill"></i>
+                </span>
+                
+            </button>
+            {{ total_likes }}
         </form>
     </article>
 {% endblock content %}
