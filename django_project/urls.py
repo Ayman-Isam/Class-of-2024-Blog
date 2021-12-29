@@ -18,7 +18,7 @@ urlpatterns = [
     path('', include('blog.urls')),
     path('tinymce/', include('tinymce.urls'))
 
-]
+]+ static(settings.MEDIA_DIRECTORY, document_root=settings.MEDIA_ROOT )
 
 
 if settings.DEBUG:

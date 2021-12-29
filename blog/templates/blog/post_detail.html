@@ -16,23 +16,67 @@
             {% endif %}
         </div>
         <h2 class="article-title">{{ object.title }}</h2>
+
+        {% if post.header_image %}
+        <img src="{{ post.header_image.url }}" alt="The image failed to load" width="100%" height="auto" >
+        {% endif%}
+
         <p class="article-content">{{ object.content|safe }}</p>
         </div>
-        <div>
-            <a class="btn btn-outline-secondary" href="/">Back</a>
-        </div>
         
-        <hr>
+        
+        
         
         <form action="{% url 'like-post' post.pk %}" method="POST">
             {% csrf_token %}
+            <h2>
+                Likes - [{{ total_likes }}]
+            </h2>
+            <br>
+            
             <button type="submit", name="post_id", value="{{ post.id }}", class="like">
+                <span class="like__text">Like</span>
                 <span class="like__icon">
                     <i class="bi bi-heart-fill"></i>
                 </span>
                 
             </button>
-            {{ total_likes }}
+            
+            <br>
+        
         </form>
+
+        <hr>
+        <h2>
+            Comments - [{{ total_comments }}]
+        </h2><br>
+        <form method="get" action="{% url 'post-comment' post.pk %}">
+            <button class="comment">
+                <span class="like__text">Comment</span><br>
+                <span class="like__icon">
+                    <i class="bi bi-chat-fill"></i>
+                </span>
+            </button>
+        </form>
+        
+        <br><br>
+        
+
+
+        {% if not post.comments.all %}
+            No Comments Yet - Add one above
+
+        {% else %}     
+            {% for comment in post.comments.all %}
+                <strong>
+                    {{ comment.name }} | 
+                    {{ comment.date_added }}
+                </strong>
+                <br>
+                {{ comment.body }}
+                <br><br>
+            {% endfor %}
+        {% endif %}    
+
     </article>
 {% endblock content %}

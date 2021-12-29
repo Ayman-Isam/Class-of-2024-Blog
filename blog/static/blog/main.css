@@ -103,10 +103,33 @@ body {
     background: rgb(185, 0, 93)
   }
 
-  .like__icon {
+  .like__icon,
+  .like__text {
     display: inline-flex;
     align-items: center;
     padding: 0 12px;
     color: white;
     height: 100%;
+  }
+  .comment {
+    display: inline-flex;
+    height: auto;
+    width: auto;
+    padding: 2.5px;
+    background: rgb(0, 130, 251);
+    border: none;
+    outline: none;
+    border-radius: 2.5px;
+    overflow: hidden;
+    font-family: 'Quicksand', sans-serif;
+    font-size: 24px;
+    font-weight: 500;
+    cursor: pointer;
+  }
+
+  .profile {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1em;
   }

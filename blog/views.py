@@ -2,9 +2,10 @@ from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.models import User
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
-from .models import Post
+from .models import Comment, Post
 from django.http import HttpResponseRedirect
 from django.urls import reverse
+from .forms import CommentForm
 
 def home(request):
     context = {
@@ -46,7 +47,7 @@ class PostDetailView(DetailView):
     
 class PostCreateView(LoginRequiredMixin, CreateView):
     model = Post 
-    fields = ['title', 'content']
+    fields = ['title','description','header_image','content' ]
 
     def form_valid(self, form):
         form.instance.author = self.request.user
@@ -54,7 +55,7 @@ class PostCreateView(LoginRequiredMixin, CreateView):
 
 class PostUpdateView(UserPassesTestMixin, LoginRequiredMixin, UpdateView):
     model = Post 
-    fields = ['title', 'content']
+    fields = ['title','description','content']
 
     def form_valid(self, form):
         form.instance.author = self.request.user
@@ -78,4 +79,19 @@ class PostDeleteView(UserPassesTestMixin, LoginRequiredMixin, DeleteView):
 
 def about(request):
     return render(request, 'blog/about.html', {'title': 'About'})
+
+
+class PostCommentView(CreateView):
+	model = Comment
+	form_class = CommentForm
+	ordering = ['-date_added']
+
+
+	def form_valid(self, form):
+		form.instance.post_id = self.kwargs['pk']
+		return super().form_valid(form)
+
+	success_url = '/'
+
+	
 
