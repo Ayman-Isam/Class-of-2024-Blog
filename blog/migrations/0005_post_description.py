@@ -13,6 +13,6 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='post',
             name='description',
-            field=models.CharField(default='Click here for the full post', max_length=255),
+            field=models.CharField(default='Click above for the full post', max_length=255),
         ),
     ]

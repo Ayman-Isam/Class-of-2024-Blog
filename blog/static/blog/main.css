@@ -34,6 +34,8 @@ body {
     border: 1px solid #dddddd;
     border-radius: 3px;
     margin-bottom: 20px;
+    display: flex;
+
   }
   
   .article-title {
@@ -127,9 +129,15 @@ body {
     cursor: pointer;
   }
 
-  .profile {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 1em;
+  .sidebar {
+    background: #ffffff;
+    padding: 10px 20px;
+    border: 1px solid #dddddd;
+    border-radius: 3px;
+    margin-bottom: 20px;
+  }
+
+  .username {
+    font-size: x-large;
+    font-family: Helvetica, Arial, sans-serif;
   }

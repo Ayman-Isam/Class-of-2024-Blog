@@ -22,7 +22,7 @@ class PostListView(ListView):
     model = Post 
     template_name = 'blog/home.html'
     context_object_name = 'posts'
-    ordering = ['-date_posted']
+    ordering = ['-date_added']
     paginate_by = 5
 
 class UserPostListView(ListView):
@@ -33,7 +33,7 @@ class UserPostListView(ListView):
 
     def get_queryset(self):
         user = get_object_or_404(User, username=self.kwargs.get('username'))
-        return Post.objects.filter(author=user).order_by('-date_posted')
+        return Post.objects.filter(author=user).order_by('-date_added')
 
 class PostDetailView(DetailView):
     model = Post 
