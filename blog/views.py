@@ -100,7 +100,7 @@ class PostCommentView(CreateView):
 def search(request):
     if request.method =='POST':
         searched = request.POST['searched']
-        posts = Post.objects.filter(t__icontains=searched)
+        posts = Post.objects.filter(title__icontains=searched)
         return render(request, 'blog/search.html', {'searched':searched, 'posts':posts})
     else:
         return render(request, 'blog/search.html', {})    

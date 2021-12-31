@@ -32,19 +32,20 @@
         
         <form action="{% url 'like-post' post.pk %}" method="POST">
             {% csrf_token %}
+        
             <h2>
                 Likes - [{{ total_likes }}]
             </h2>
             <br>
             
+            {% if user.is_authenticated %}
             <button type="submit", name="post_id", value="{{ post.id }}", class="like">
                 <span class="like__text">Like</span>
                 <span class="like__icon">
                     <i class="bi bi-heart-fill"></i>
                 </span>
-                
             </button>
-            
+            {% endif %}
             <br>
         
         </form>
@@ -53,6 +54,7 @@
         <h2>
             Comments 
         </h2><br>
+        {% if user.id_authenticated %}
         <form method="get" action="{% url 'post-comment' post.pk %}">
             <button class="comment">
                 <span class="like__text">Comment</span><br>
@@ -61,10 +63,9 @@
                 </span>
             </button>
         </form>
-        
+        {% endif %}
         <br><br>
         
-
 
         {% if not post.comments.all %}
             Be the first one to comment on this post
