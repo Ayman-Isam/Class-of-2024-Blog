@@ -2,9 +2,11 @@
 {% block content %}
     <h2>You have been logged out</h2>
      <div class="border-top pt-3">
-        <small class="text-muted">
-            <a href="{% url 'login' %}">Log In Again</a>
-        </small>
+        <form action="{% url 'login' %}">
+            <button type="submit" class="btn btn-outline-info" >
+                Log In Again
+            </button>
+        </form>
     </div>
 {% endblock content %}
 

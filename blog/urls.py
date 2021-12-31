@@ -12,4 +12,5 @@ urlpatterns = [
     path('like/<int:pk>/', LikeView, name='like-post'),  
     path('about/', views.about, name='blog-about'),
     path('post/<int:pk>/comment/', PostCommentView.as_view(), name='post-comment'),
+    path('search/', views.search, name='search-post'),
 ]

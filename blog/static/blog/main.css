@@ -13,7 +13,7 @@ body {
   }
   
   .bg-steel {
-    background-color: #5f788a;
+    background-color: #51626e;
   }
   
   .site-header .navbar-nav .nav-link {
@@ -34,7 +34,7 @@ body {
     border: 1px solid #dddddd;
     border-radius: 3px;
     margin-bottom: 20px;
-    display: flex;
+    
 
   }
   
@@ -141,3 +141,54 @@ body {
     font-size: x-large;
     font-family: Helvetica, Arial, sans-serif;
   }
+
+  .find {
+    text-align: center;
+  }
+
+  .search {
+   
+    height: auto;
+    width: auto;
+    padding: 2.5px;
+    background: gray;
+    border: none;
+    outline: none;
+    border-radius: 2.5px;
+    overflow: hidden;
+    font-family: 'Quicksand', sans-serif;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    color: white;
+  }
+
+  .search__icon,
+  .search__text {
+    display:inline;
+    align-items: left;
+    padding: 0 12px;
+    color: white;
+    height: 100%;
+    font-size: 18px;
+  }
+
+  .contact {
+    font-size: 16px;
+  }
+
+  .img {
+    max-width: 100%;
+    height: auto;
+  }
+
+  .search-results {
+    text-align: center;
+    font-family:  Helvetica, Arial, sans-serif;
+    font-size: x-large;
+  }
+
+  
+
+
+  

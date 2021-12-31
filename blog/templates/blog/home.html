@@ -1,5 +1,7 @@
 {% extends "blog/base.html" %}
 {% block content %}
+
+
     {% for post in posts %}
         <article class="media content-section">
           <img class="rounded-circle article-img"src="{{ post.author.profile.image.url }}">
@@ -12,7 +14,11 @@
             <p class="article-content">{{ post.description }}</p>
           </div>
         </article>
+        
     {% endfor %}
+
+    
+
 
   {% if is_paginated %}
 

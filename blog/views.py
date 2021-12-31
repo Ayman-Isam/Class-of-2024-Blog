@@ -1,6 +1,7 @@
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.models import User
+from django.urls.base import reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from .models import Comment, Post
 from django.http import HttpResponseRedirect
@@ -86,12 +87,24 @@ class PostCommentView(CreateView):
 	form_class = CommentForm
 	ordering = ['-date_added']
 
-
 	def form_valid(self, form):
 		form.instance.post_id = self.kwargs['pk']
 		return super().form_valid(form)
 
-	success_url = '/'
+	def get_success_url(self):
+		return reverse_lazy('post-detail',kwargs={'pk':self.kwargs['pk']})
+
+        
+
+
+def search(request):
+    if request.method =='POST':
+        searched = request.POST['searched']
+        posts = Post.objects.filter(t__icontains=searched)
+        return render(request, 'blog/search.html', {'searched':searched, 'posts':posts})
+    else:
+        return render(request, 'blog/search.html', {})    
+    
 
 	
 

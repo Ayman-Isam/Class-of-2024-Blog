@@ -1,0 +1,18 @@
+{% extends "blog/base.html" %}
+
+{% block content %}
+<div class="search-results">
+    {% if searched %}
+        <h1>Results for 
+            - {{ searched }}
+        </h1>
+        <br>
+        {% for post in posts %}
+            <a href="{% url 'post-detail' post.id %}">{{ post }} - {{ post.description }}<br></a>
+        {% endfor %}
+
+    {% else %}
+        <h1 class="find">You forgot to search for a post</h1>    
+    {% endif %}    
+</div>
+{% endblock %}    
