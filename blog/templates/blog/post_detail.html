@@ -3,14 +3,14 @@
 
 <div class="profile">
     <article class="media content-section">
-        <img class="rounded-circle article-img "src="{{ object.author.profile.image.url }}">
+        <img class="rounded-circle article-img "src="{{ post.author.profile.image.url }}">
         <div class="media-body">
             <div class="article-metadata">
-                <a class="username" href="{% url 'user-posts' object.author.username %}">{{ object.author }}</a><br>
-                <small class="text-muted">{{ object.date_posted|date:"F d, Y" }}</small>
+                <a class="username" href="{% url 'user-posts' post.author.username %}">{{ post.author }}</a><br>
+                <small class="text-muted">{{ post.date_posted|date:"F d, Y" }}</small>
                 
             </div>
-        <h2 class="article-title">{{ object.title }}</h2>
+        <h2 class="article-title">{{ post.title }}</h2>
 
         {% if post.header_image %}
         <img src="{{ post.header_image.url }}" alt="The image failed to load" class="img">
@@ -20,10 +20,10 @@
         </div>
 </div>        
 
-        {% if object.author == user %}
+        {% if post.author == user %}
                 <div>
-                    <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'post-update' object.id %}">Update</a>
-                    <a class="btn btn-danger btn-sm mt-1 mb-1" href="{% url 'post-delete' object.id %}">Delete</a>
+                    <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'post-update' post.id %}">Update</a>
+                    <a class="btn btn-danger btn-sm mt-1 mb-1" href="{% url 'post-delete' post.id %}">Delete</a>
                 </div>
                 <br>
 
@@ -45,6 +45,13 @@
                     <i class="bi bi-heart-fill"></i>
                 </span>
             </button>
+            {% else %}
+            <button type="submit", name="post_id", value="{{ post.id }}", class="like" disabled>
+                <span class="like__text">Like</span>
+                <span class="like__icon">
+                    <i class="bi bi-heart-fill"></i>
+                </span>
+            </button>
             {% endif %}
             <br>
         
@@ -54,9 +61,18 @@
         <h2>
             Comments 
         </h2><br>
-        {% if user.id_authenticated %}
+        {% if user.is_authenticated %}
         <form method="get" action="{% url 'post-comment' post.pk %}">
-            <button class="comment">
+            <button class="comment-button">
+                <span class="like__text">Comment</span><br>
+                <span class="like__icon">
+                    <i class="bi bi-chat-fill"></i>
+                </span>
+            </button>
+        </form>
+        {% else %}
+        <form method="get" action="{% url 'post-comment' post.pk %}">
+            <button class="comment-button" disabled>
                 <span class="like__text">Comment</span><br>
                 <span class="like__icon">
                     <i class="bi bi-chat-fill"></i>
@@ -73,14 +89,23 @@
         {% else %}     
             {% for comment in post.comments.all %}
                 <strong>
-                    {{ comment.name }} | 
+                    {{ comment.author }} | 
                     {{ comment.date_added }}
                 </strong>
                 <br>
-                {{ comment.body }}
-                <br><br>
+                {{ comment.content }}
+                <br>
+                {% if post.author == user %}
+                <div>
+                    <a class="btn btn-secondary btn-xs mt-1 mb-1" href="{% url 'post-update' object.id %}">Update</a>
+                    <a class="btn btn-danger btn-xs mt-1 mb-1" href="{% url 'post-delete' object.id %}">Delete</a>
+                </div>
+                <br>
+                {% endif %}
             {% endfor %}
         {% endif %}    
+
+        
 
     </article>
 {% endblock content %}

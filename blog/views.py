@@ -1,4 +1,5 @@
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.db.models import fields
 from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.models import User
 from django.urls.base import reverse_lazy
@@ -56,7 +57,7 @@ class PostCreateView(LoginRequiredMixin, CreateView):
 
 class PostUpdateView(UserPassesTestMixin, LoginRequiredMixin, UpdateView):
     model = Post 
-    fields = ['title','description','content']
+    fields = ['title','description','header_image','content']
 
     def form_valid(self, form):
         form.instance.author = self.request.user
@@ -84,11 +85,11 @@ def about(request):
 
 class PostCommentView(CreateView):
 	model = Comment
-	form_class = CommentForm
-	ordering = ['-date_added']
+	fields = ['content']
 
 	def form_valid(self, form):
 		form.instance.post_id = self.kwargs['pk']
+		form.instance.author = self.request.user.username
 		return super().form_valid(form)
 
 	def get_success_url(self):
