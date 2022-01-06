@@ -95,10 +95,10 @@
                 <br>
                 {{ comment.content }}
                 <br>
-                {% if post.author == user %}
+                {% if comment.author == user %}
                 <div>
-                    <a class="btn btn-secondary btn-xs mt-1 mb-1" href="{% url 'post-comment-update' post.id %}">update</a>
-                    <a class="btn btn-danger btn-xs mt-1 mb-1" href="{% url 'post-comment-update' post.id %}">Delete</a>
+                    <a class="btn btn-secondary btn-xs mt-1 mb-1" href="{% url 'post-comment-update' post.id %}">Update</a>
+                    <a class="btn btn-danger btn-xs mt-1 mb-1" href="{% url 'post-comment-delete' post.id %}">Delete</a>
                 </div>
                 <br>
                 {% endif %}

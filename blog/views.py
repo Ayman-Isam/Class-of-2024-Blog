@@ -87,11 +87,11 @@ def about(request):
 class PostCommentCreateView(LoginRequiredMixin, CreateView):
     model = Comment
     fields = ['content']
-    template_name = 'blog/post-detail.html'
+    template_name = 'blog/comment_form.html'
 
     def form_valid(self, form):
         form.instance.post_id = self.kwargs['pk']
-        form.instance.author = self.request.user.username
+        form.instance.author = self.request.user
         return super().form_valid(form)
 
     def get_success_url(self):
@@ -100,11 +100,11 @@ class PostCommentCreateView(LoginRequiredMixin, CreateView):
 class PostCommentUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Comment
     fields = ['content']
-    template_name = 'blog/post-detail.html'
+    template_name = 'blog/comment_form.html'
 
     def form_valid(self, form):
         form.instance.post_id = self.kwargs['pk']
-        form.instance.author = self.request.user.username
+        form.instance.author = self.request.user
         return super().form_valid(form)
 
     def get_success_url(self):
@@ -116,10 +116,10 @@ class PostCommentUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView)
             return True
         return False
     
-class PostCommentDeleteView():
+class PostCommentDeleteView(DeleteView):
     model = Comment
     fields = ['content']
-    template_name = 'blog/post-detail.html'
+    template_name = 'blog/comment_confirm_delete.html'
     
     def test_func(self):
         post = self.get_object()
