@@ -97,8 +97,8 @@
                 <br>
                 {% if post.author == user %}
                 <div>
-                    <a class="btn btn-secondary btn-xs mt-1 mb-1" href="{% url 'post-update' object.id %}">update</a>
-                    <a class="btn btn-danger btn-xs mt-1 mb-1" href="{% url 'post-delete' object.id %}">Delete</a>
+                    <a class="btn btn-secondary btn-xs mt-1 mb-1" href="{% url 'post-comment-update' post.id %}">update</a>
+                    <a class="btn btn-danger btn-xs mt-1 mb-1" href="{% url 'post-comment-update' post.id %}">Delete</a>
                 </div>
                 <br>
                 {% endif %}

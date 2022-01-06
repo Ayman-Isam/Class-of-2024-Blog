@@ -4,13 +4,14 @@ from django.utils import timezone
 from django.contrib.auth.models import User
 from django.urls import reverse
 from tinymce.models import HTMLField
+from django.utils.text import slugify
 
 class Post(models.Model):
     title = models.CharField(max_length=100)
     header_image = models.ImageField(null=True,blank=True, upload_to="images/")
     content = HTMLField(blank=True, null=True)
     date_added = models.DateTimeField(default=timezone.now)
-    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    author = models.ForeignKey(User, on_delete=models.CASCADE,related_name='author')
     likes = models.ManyToManyField(User, related_name='blog_posts')
     description = models.CharField(max_length=255, default='Click above this for the full post')
 
@@ -25,7 +26,7 @@ class Post(models.Model):
 
 class Comment(models.Model):
     post = models.ForeignKey(Post, related_name='comments', on_delete=models.CASCADE)
-    author = models.CharField(max_length=32,default='Unknown')
+    author = models.ForeignKey(User, related_name='comment-author', on_delete=models.CASCADE)
     content = models.TextField()
     date_added = models.DateField(auto_now_add=True)
 

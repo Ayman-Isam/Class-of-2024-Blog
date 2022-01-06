@@ -8,6 +8,7 @@ from .models import Comment, Post
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 from .forms import CommentForm
+from blog import models
 
 def home(request):
     context = {
@@ -83,19 +84,51 @@ def about(request):
     return render(request, 'blog/about.html', {'title': 'About'})
 
 
-class PostCommentView(CreateView):
-	model = Comment
-	fields = ['content']
+class PostCommentCreateView(LoginRequiredMixin, CreateView):
+    model = Comment
+    fields = ['content']
+    template_name = 'blog/post-detail.html'
 
-	def form_valid(self, form):
-		form.instance.post_id = self.kwargs['pk']
-		form.instance.author = self.request.user.username
-		return super().form_valid(form)
+    def form_valid(self, form):
+        form.instance.post_id = self.kwargs['pk']
+        form.instance.author = self.request.user.username
+        return super().form_valid(form)
 
-	def get_success_url(self):
-		return reverse_lazy('post-detail',kwargs={'pk':self.kwargs['pk']})
+    def get_success_url(self):
+        return reverse_lazy('post-detail',kwargs={'pk':self.kwargs['pk']})
 
+class PostCommentUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
+    model = Comment
+    fields = ['content']
+    template_name = 'blog/post-detail.html'
+
+    def form_valid(self, form):
+        form.instance.post_id = self.kwargs['pk']
+        form.instance.author = self.request.user.username
+        return super().form_valid(form)
+
+    def get_success_url(self):
+        return reverse_lazy('post-detail',kwargs={'pk':self.kwargs['pk']})
+    
+    def test_func(self):
+        post = self.get_object()
+        if self.request.user == post.author:
+            return True
+        return False
+    
+class PostCommentDeleteView():
+    model = Comment
+    fields = ['content']
+    template_name = 'blog/post-detail.html'
+    
+    def test_func(self):
+        post = self.get_object()
+        if self.request.user == post.author:
+            return True
+        return False
         
+    def get_success_url(self):
+        return reverse_lazy('post-detail',kwargs={'pk':self.kwargs['pk']})    
 
 
 def search(request):
@@ -107,5 +140,5 @@ def search(request):
         return render(request, 'blog/search.html', {})    
     
 
-	
+    
 
