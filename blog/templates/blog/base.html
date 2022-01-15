@@ -24,42 +24,50 @@
             <div class="container">
                 <a class="navbar-brand mr-4" href="{% url 'blog-home' %}">Class Blog</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle" aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
+                <span class="navbar-toggler-icon"></span>
             </button>
 
             <div class="collapse navbar-collapse" id="navbarToggle">
                 <div class="navbar-nav me-auto">
-
-            
-                
-                
-                    {% if user.is_authenticated %}
-                        <a class="nav-item nav-link" href="{% url 'post-create' %}">New Post</a>
-                        <a class="nav-item nav-link" href="{% url 'profile' %}">Profile</a>
-                        <a class="nav-item nav-link" href="{% url 'logout' %}">Logout</a>
-                        
-                    {% else %}
-                        <a class="nav-item nav-link" href="{% url 'login' %}">Login</a>
-                        <a class="nav-item nav-link" href="{% url 'register' %}">Register</a>
-                    {% endif %}
-                    <div class="navbar-nav mr-auto">
-                        <a class="nav-item nav-link" href="{% url 'blog-about' %}">About</a>
-                      </div>
-                    
-                </div>
-                
-
-                </div>
-                
-                    <form class="d-flex" method="POST" action="{% url 'search-post' %}"> 
+                    <form class="d-flex search" method="POST" action="{% url 'search-post' %}"> 
                         {% csrf_token %}
                         <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="searched">
-                        <button class="btn btn-secondary" type="submit">Search</button>
+                        <button class="btn btn-secondary" type="submit">
+                            <ion-icon name="search"></ion-icon>
+                        </button>
                     </form>
-                <div class="navbar-nav">
                     
-
+                </div>
             </div>
+                
+                    
+                <div class="navbar-nav ms-auto">
+
+                    <a class="nav-item nav-link" href="{% url 'blog-home' %}">
+                        <ion-icon name="home-outline"  class="icon"></ion-icon>
+                    </a>
+                    
+                    {% if user.is_authenticated %}
+                        <a class="nav-item nav-link" href="{% url 'post-create' %}">
+                            <ion-icon name="add-circle-outline" class="icon"></ion-icon>
+                        </a>
+                        <a class="nav-item nav-link" href="{% url 'logout' %}">
+                            <ion-icon name="log-out-outline" class="icon"></ion-icon>
+                        </a>
+                        <a class="nav-item nav-link" href="{% url 'profile' %}">
+                            <img class="rounded-circle icon" src="{{ user.profile.image.url }}">
+                        </a>
+                        
+                        
+                    {% else %}
+                        <a class="nav-item nav-link" href="{% url 'login' %}">
+                            <ion-icon name="log-in-outline" class="icon"></ion-icon>
+                        </a>
+                        <a class="nav-item nav-link" href="{% url 'register' %}">
+                            <ion-icon name="create-outline" class="icon"></ion-icon>
+                        </a>
+                    {% endif %}
+                </div>
             </div>
             
         </nav>
@@ -67,9 +75,9 @@
 
 
 
-        <main role="main" class="container">
-            <div class="row">
-                <div class="col-md-8">
+        <main role="main" class="grid">
+            <div class="post">
+                <div>
                     {% if messages %}
                         {% for message in messages %}
                             <div class="alert alert-{{ message.tags }}">
@@ -77,31 +85,52 @@
                             </div>
                         {% endfor %}
                     {% endif %}
-                {% block content %}{% endblock %}
+                    {% block content %}{% endblock %}
                 </div>
-
-                <div class="col-md-4 contact" >
-                    <div class="sidebar">
-                        <h3>Contact</h3>
-                        <hr>
-                        <p>Email: aymanisam26@gmail.com </p>
-                        <hr>
-                        <p>Instagram: https://www.instagram.com/aymanisam24/ </p>
-                        <hr>
-                        <p>Facebook: https://www.facebook.com/ayman.isam.505/ </p>
-                        <hr>
-                        <p>Discord: Cantankerous Allay#6124 </p>
-                    </div>
-
             </div>
-
-
-            
+            <div>
+                <div class="sidebar">
+                    <h2>
+                        About
+                    </h2><hr>
+                    <p>This is a blog made by Ayman for the students of the class of 
+                        2024 of Harare International School for the purpose of using this blog as a way to 
+                        share thoughts on different topics among the students of the class
+                    </p>                       
+                    <img src="http://www.etrendtalk.com/wp-content/uploads/2020/05/blog.jpg" alt="Image not found" class="img">                       
+                </div>
+                <div class="sidebar">
+                    <h2>
+                        Getting started
+                    </h2><hr>
+                    <p>To get started you can do the following things
+                        <ul class="circle">
+                            <li>First you can go to the register page from the navbar and then create an account</li>
+                            <li>Then you can work on your profile and maybe add a profile picture</li>
+                            <li>Next you can check out other posts in the blog</li>
+                            <li>You can then like posts and comment on them</li>
+                            <li>If you need you can update or delete any comments you made</li>
+                            <li>You can also create your own posts and update or even delete them</li>
+                            <li>If you ever forget your password you can go to the forgot password link</li>
+                            <li>If you ever need any help, have any queries or suggestions, you have a contact page where you can contact support</li>
+                        </ul>
+                    </p>                                              
+                </div>
+                <div class="sidebar">
+                    <h2>
+                        Contact
+                    </h2><hr>
+                    <p>Gmail: aymanisam26@gmail.com </p>
+                    <p>Instagram : aymanisam24 </p>
+                    <p>Discord : Cantankerous Allay#6124 </p>
+                </div>
+            </div>
         </main>
 
         
         
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
 </body>
 </html>
 

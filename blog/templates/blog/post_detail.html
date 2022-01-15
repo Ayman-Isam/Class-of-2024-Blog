@@ -6,14 +6,14 @@
         <img class="rounded-circle article-img "src="{{ post.author.profile.image.url }}">
         <div class="media-body">
             <div class="article-metadata">
-                <a class="username" href="{% url 'user-posts' post.author.username %}">{{ post.author }}</a><br>
-                <small class="text-muted">{{ post.date_posted|date:"F d, Y" }}</small>
+                <a class="username" href="{% url 'user-posts' post.author.username %}">{{ post.author }}</a>
+                <small class="text-muted">{{ object.date_added|date:"F d, Y" }}</small>
                 
             </div>
         <h2 class="article-title">{{ post.title }}</h2>
 
         {% if post.header_image %}
-        <img src="{{ post.header_image.url }}" alt="The image failed to load" class="img">
+            <img src="{{ post.header_image.url }}" alt="The image failed to load" class="img">
         {% endif%}
 
         <p class="article-content">{{ object.content|safe }}</p>
@@ -33,40 +33,41 @@
         <form action="{% url 'like-post' post.pk %}" method="POST">
             {% csrf_token %}
         
-            <h2>
-                Likes - [{{ total_likes }}]
-            </h2>
-            <br>
             
             {% if user.is_authenticated %}
-            <button type="submit", name="post_id", value="{{ post.id }}", class="like">
-                <span class="like__text">Like</span>
-                <span class="like__icon">
-                    <i class="bi bi-heart-fill"></i>
-                </span>
-            </button>
+                {% if user in post.likes.all %}
+                <button type="submit", name="post_id", value="{{ post.id }}", class="unlike">
+                    <span class="like__icon">
+                        <ion-icon name="heart-dislike"></ion-icon>                    
+                    <span class="like__text">{{ total_likes }}</span>
+                </button>
+                {% else %}
+                <button type="submit", name="post_id", value="{{ post.id }}", class="like">
+                    <span class="like__icon">
+                        <ion-icon name="heart"></ion-icon>                    
+                    <span class="like__text">{{ total_likes }}</span>
+                </button>
+                {% endif %}
+
             {% else %}
-            <button type="submit", name="post_id", value="{{ post.id }}", class="like" disabled>
-                <span class="like__text">Like</span>
-                <span class="like__icon">
-                    <i class="bi bi-heart-fill"></i>
-                </span>
-            </button>
+                <button type="submit", name="post_id", value="{{ post.id }}", class="like" disabled>
+                    <span class="like__text">Like</span>
+                    <span class="like__icon">
+                        <ion-icon name="heart"></ion-icon>
+                    </span>
+                </button>
             {% endif %}
+            <br>
             <br>
         
         </form>
         
-        <hr>
-        <h2>
-            Comments 
-        </h2><br>
+        
         {% if user.is_authenticated %}
         <form method="get" action="{% url 'post-comment' post.pk %}">
             <button class="comment-button">
-                <span class="like__text">Comment</span><br>
                 <span class="like__icon">
-                    <i class="bi bi-chat-fill"></i>
+                    <ion-icon name="chatbox"></ion-icon>
                 </span>
             </button>
         </form>
@@ -75,7 +76,7 @@
             <button class="comment-button" disabled>
                 <span class="like__text">Comment</span><br>
                 <span class="like__icon">
-                    <i class="bi bi-chat-fill"></i>
+                    <ion-icon name="chatbox-ellipses"></ion-icon>
                 </span>
             </button>
         </form>
@@ -85,8 +86,8 @@
 
         {% if not post.comments.all %}
             Be the first one to comment on this post
-
-        {% else %}     
+        {% else %}
+            
             {% for comment in post.comments.all %}
                 <strong>
                     {{ comment.author }} | 

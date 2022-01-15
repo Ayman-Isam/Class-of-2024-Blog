@@ -11,6 +11,9 @@
             </div>
             <h2><a class="article-title" href="{% url 'post-detail' post.id %}">{{ post.title }}</a></h2>
             <p class="article-content">{{ post.content|safe }}</p>
+            {% if post.header_image %}
+              <img src="{{ post.header_image.url }}" alt="The image failed to load" class="img">
+            {% endif%}
           </div>
         </article>
     {% endfor %}

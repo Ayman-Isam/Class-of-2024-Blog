@@ -17,8 +17,14 @@ def home(request):
     return render(request, 'blog/home.html', context )
 
 def LikeView(request, pk):
-    post = Post.objects.get(id=pk)
-    post.likes.add(request.user)
+    post = get_object_or_404(Post, id=request.POST.get('post_id'))
+    liked = False
+    if post.likes.filter(id=request.user.id).exists():
+        post.likes.remove(request.user)
+    else:    
+        post.likes.add(request.user)
+        liked = True
+        
     return HttpResponseRedirect(reverse('post-detail', args=[str(pk)]))
 
 class PostListView(ListView):
@@ -42,10 +48,18 @@ class PostDetailView(DetailView):
     model = Post 
 
     def get_context_data(self, *args,**kwargs):
-        stuff = get_object_or_404(Post, id=self.kwargs['pk'])
-        total_likes = stuff.total_likes()
+        
         context = super(PostDetailView, self).get_context_data(*args,**kwargs)
+        
+        post = get_object_or_404(Post, id=self.kwargs['pk'])
+        total_likes = post.total_likes()
+        
+        liked = False
+        if post.likes.filter(id=self.request.user.id).exists:
+            liked = True
+        
         context['total_likes']= total_likes
+        context['liked']= liked
         return context
     
 class PostCreateView(LoginRequiredMixin, CreateView):
@@ -135,6 +149,7 @@ def search(request):
     if request.method =='POST':
         searched = request.POST['searched']
         posts = Post.objects.filter(title__icontains=searched)
+        posts = Post.objects.filter(description__icontains=searched)
         return render(request, 'blog/search.html', {'searched':searched, 'posts':posts})
     else:
         return render(request, 'blog/search.html', {})    

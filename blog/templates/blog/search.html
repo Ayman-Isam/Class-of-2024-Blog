@@ -9,8 +9,6 @@
         <br>
         {% for post in posts %}
             <a href="{% url 'post-detail' post.id %}">{{ post }} - {{ post.description }}<br></a>
-        {% empty %}
-            Sorry, The Post You Searched For Doesn't exist
         {% endfor %}
 
     {% else %}
