@@ -50,11 +50,10 @@
                 {% endif %}
 
             {% else %}
-                <button type="submit", name="post_id", value="{{ post.id }}", class="like" disabled>
-                    <span class="like__text">Like</span>
+                <button type="submit" name="post_id" value="{{ post.id }}" class="like" disabled>
                     <span class="like__icon">
-                        <ion-icon name="heart"></ion-icon>
-                    </span>
+                        <ion-icon name="heart"></ion-icon>                    
+                    <span class="like__text">{{ total_likes }}</span>
                 </button>
             {% endif %}
             <br>
@@ -74,7 +73,6 @@
         {% else %}
         <form method="get" action="{% url 'post-comment' post.pk %}">
             <button class="comment-button" disabled>
-                <span class="like__text">Comment</span><br>
                 <span class="like__icon">
                     <ion-icon name="chatbox-ellipses"></ion-icon>
                 </span>

@@ -150,6 +150,7 @@ def search(request):
         searched = request.POST['searched']
         posts = Post.objects.filter(title__icontains=searched)
         posts = Post.objects.filter(description__icontains=searched)
+        posts = Post.objects.filter(content__icontains=searched)
         return render(request, 'blog/search.html', {'searched':searched, 'posts':posts})
     else:
         return render(request, 'blog/search.html', {})    
