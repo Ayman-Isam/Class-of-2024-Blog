@@ -163,8 +163,8 @@ body {
 
   .search {
     display: flex;
-    height: 1rem;
-    width: auto;
+    height: auto;
+    width: 20rem;
     padding: 2.5px;
     border-left: none;
     outline: none;
