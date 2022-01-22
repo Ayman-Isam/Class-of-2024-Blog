@@ -10,8 +10,7 @@
                 <small class="text-muted">{{ object.date_added|date:"F d, Y" }}</small>
             </div>
         <h2 class="article-title">{{ post.title }}</h2>
-        <h4 class="article-title">{{ post.description }}</h2>
-
+        <p>{{ post.description }}</p>
         {% if post.header_image %}
             <img src="{{ post.header_image.url }}" alt="The image failed to load" class="img">
         {% endif%}
