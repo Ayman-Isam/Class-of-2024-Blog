@@ -163,7 +163,7 @@ body {
 
   .search {
     display: flex;
-    height: auto;
+    height: 1rem;
     width: auto;
     padding: 2.5px;
     border-left: none;
