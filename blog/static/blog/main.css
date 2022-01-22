@@ -164,7 +164,7 @@ body {
   .search {
     display: flex;
     height: auto;
-    width: 300%;
+    width: auto;
     padding: 2.5px;
     border-left: none;
     outline: none;
