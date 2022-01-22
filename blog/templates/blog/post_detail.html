@@ -8,6 +8,7 @@
             <div class="article-metadata">
                 <a class="username" href="{% url 'user-posts' post.author.username %}">{{ post.author }}</a>
                 <small class="text-muted">{{ object.date_added|date:"F d, Y" }}</small>
+                <small class="text-muted">{{ object.description }}</small>
                 
             </div>
         <h2 class="article-title">{{ post.title }}</h2>
