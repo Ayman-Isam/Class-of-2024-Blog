@@ -218,8 +218,8 @@ body {
     grid-template-columns: 1fr 1fr 1fr;
     grid-gap: 1em;
     grid-auto-rows: minmax(100px auto);
-    padding-left: 150px;
-    padding-right: 150px;
+    padding-left: 15%;
+    padding-right: 15%;
     justify-items: stretch;
     align-items: stretch;
   }
