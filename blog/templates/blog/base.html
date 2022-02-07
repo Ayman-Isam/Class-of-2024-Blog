@@ -33,7 +33,7 @@
                         {% csrf_token %}
                         <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="searched">
                         <button class="btn btn-secondary" type="submit">
-                            <ion-icon name="search"></ion-icon>
+                            <ion-icon name="go"></ion-icon>
                         </button>
                     </form>
                     
@@ -44,10 +44,6 @@
                 <div class="navbar-nav ms-auto">
                     <a class="nav-item nav-link" href="{% url 'blog-about' %}">
                         <ion-icon name="help" class="icon"></ion-icon>
-                    </a>
-
-                    <a class="nav-item nav-link" href="{% url 'blog-home' %}">
-                        <ion-icon name="home-outline"  class="icon"></ion-icon>
                     </a>
                     
                     {% if user.is_authenticated %}
